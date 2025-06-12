@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import InvoicePreview from "../components/invoice/InvoicePreview";
 import InvoiceForm from "../components/invoice/InvoiceForm";
 import InvoiceHero from "../components/invoice/InvoiceHero";
 import Button from "../components/ui/Button";
+import html2canvas from "html2canvas-pro";
+import jsPDF from "jspdf";
 
 export default function InvoiceGenerator() {
   // Initial state for the form
@@ -143,10 +145,20 @@ export default function InvoiceGenerator() {
     }));
   };
 
-  // Save invoice (placeholder function)
-  const saveInvoice = () => {
-    console.log("Saving invoice:", invoiceData);
-    alert("Invoice saved successfully!");
+  const invoiceRef = useRef(null);
+  const downloadInvoice = async () => {
+    const element = invoiceRef.current;
+    if (!element) return;
+
+    const canvas = await html2canvas(element, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`Invoice ${invoiceData.invoice.invoice_number}.pdf`);
   };
 
   return (
@@ -161,7 +173,7 @@ export default function InvoiceGenerator() {
           </div>
 
           <div className="flex items-center space-x-2">
-            <Button onClick={saveInvoice} label="Download Invoice" />
+            <Button onClick={downloadInvoice} label="Download Invoice" />
           </div>
         </div>
 
@@ -179,6 +191,7 @@ export default function InvoiceGenerator() {
 
           {/* Right Column - Preview */}
           <InvoicePreview
+            ref={invoiceRef}
             invoice={invoiceData.invoice}
             user={invoiceData.user}
             client={invoiceData.client}
