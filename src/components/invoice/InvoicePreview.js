@@ -119,7 +119,8 @@ const Preview = ({ invoice, user, client }) => {
                       >
                         {item.unit_price > 0 && (
                           <span>
-                            {invoice.currency} {item.unit_price.toFixed(2)}
+                            {invoice.currency}{" "}
+                            {item.unit_price.toLocaleString()}
                           </span>
                         )}
                       </td>
@@ -133,7 +134,7 @@ const Preview = ({ invoice, user, client }) => {
                         {item.quantity > 0 && item.unit_price > 0 && (
                           <span>
                             {invoice.currency}{" "}
-                            {(item.quantity * item.unit_price).toFixed(2)}
+                            {(item.quantity * item.unit_price).toLocaleString()}
                           </span>
                         )}
                       </td>
@@ -147,19 +148,19 @@ const Preview = ({ invoice, user, client }) => {
               <div className="flex justify-between w-64 mb-2 text-sm text-gray-600">
                 <span>Subtotal:</span>
                 <span>
-                  {invoice.Currency} {invoice.subtotal.toFixed(2)}
+                  {invoice.Currency} {invoice.subtotal.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between w-64 mb-2 text-sm text-gray-600">
-                <span>Tax ({invoice.tax_rate.toFixed(1)}%):</span>
+                <span>Tax ({invoice.tax_rate.toLocaleString()}%):</span>
                 <span>
-                  {invoice.currency} {invoice.tax.toFixed(2)}
+                  {invoice.currency} {invoice.tax.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between w-64 mt-1 pt-2 border-t border-gray-200">
                 <span className="text-base font-semibold">Total:</span>
                 <span className="text-xl font-bold text-gray-800">
-                  {invoice.currency} {invoice.total.toFixed(2)}
+                  {invoice.currency} {invoice.total.toLocaleString()}
                 </span>
               </div>
             </div>

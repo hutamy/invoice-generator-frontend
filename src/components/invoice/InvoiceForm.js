@@ -289,7 +289,7 @@ const Form = ({
               <span className="text-gray-700">Subtotal:</span>
               <span className="text-gray-700">
                 {invoiceData.invoice.currency}{" "}
-                {invoiceData.invoice.subtotal.toFixed(2)}
+                {invoiceData.invoice.subtotal.toLocaleString()}
               </span>
             </div>
             <div className="flex justify-between mb-1">
@@ -298,14 +298,14 @@ const Form = ({
               </span>
               <span className="text-gray-700">
                 {invoiceData.invoice.currency}{" "}
-                {invoiceData.invoice.tax.toFixed(2)}
+                {invoiceData.invoice.tax.toLocaleString()}
               </span>
             </div>
             <div className="flex justify-between font-medium text-lg border-t border-gray-300 pt-2 mt-2">
               <span className="text-gray-700">Total:</span>
               <span className="text-gray-700">
                 {invoiceData.invoice.currency}{" "}
-                {invoiceData.invoice.total.toFixed(2)}
+                {invoiceData.invoice.total.toLocaleString()}
               </span>
             </div>
           </div>
