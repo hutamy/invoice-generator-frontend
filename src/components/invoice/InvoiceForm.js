@@ -198,7 +198,9 @@ const Form = ({
             {invoiceData.invoice.items.map((item, index) => (
               <div key={index} className="mb-3 p-3 bg-gray-50 rounded-md">
                 <div className="flex justify-between mb-2">
-                  <span className="font-medium text-gray-500">Item #{index + 1}</span>
+                  <span className="font-medium text-gray-500">
+                    Item #{index + 1}
+                  </span>
                   <button
                     onClick={() => removeInvoiceItem(index)}
                     className="text-red-500 hover:text-red-700"
@@ -206,7 +208,7 @@ const Form = ({
                     Remove
                   </button>
                 </div>
-                <Text 
+                <Text
                   className="mb-2"
                   label={"Description"}
                   value={item.description}
@@ -224,7 +226,7 @@ const Form = ({
                       handleItemChange(index, "quantity", e.target.value)
                     }
                     placeholder="1"
-                  />       
+                  />
                   <Number
                     className="mb-2"
                     label={"Unit Price"}
@@ -241,9 +243,13 @@ const Form = ({
                     <input
                       type="text"
                       className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700"
-                      value={item.quantity > 0 && item.unit_price > 0 ? `${
-                        invoiceData.invoice.currency
-                      } ${(item.quantity * item.unit_price)}` : ""}
+                      value={
+                        item.quantity > 0 && item.unit_price > 0
+                          ? `${invoiceData.invoice.currency} ${
+                              item.quantity * item.unit_price
+                            }`
+                          : ""
+                      }
                       disabled
                     />
                   </div>

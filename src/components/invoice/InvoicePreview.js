@@ -21,19 +21,21 @@ const Preview = ({ invoice, user, client }) => {
               <div className="text-gray-600 md:text-right mt-4 md:mt-0">
                 <div>
                   Issue Date:{" "}
-                  {invoice.issue_date && new Date(invoice.issue_date).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
+                  {invoice.issue_date &&
+                    new Date(invoice.issue_date).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
                 </div>
                 <div>
                   Due Date:{" "}
-                  {invoice.due_date && new Date(invoice.due_date).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
+                  {invoice.due_date &&
+                    new Date(invoice.due_date).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
                 </div>
               </div>
             </div>
@@ -115,9 +117,11 @@ const Preview = ({ invoice, user, client }) => {
                             : "border-b border-gray-200"
                         }`}
                       >
-                        {
-                          item.unit_price > 0 && <span>{invoice.currency} {item.unit_price.toFixed(2)}</span>
-                        }
+                        {item.unit_price > 0 && (
+                          <span>
+                            {invoice.currency} {item.unit_price.toFixed(2)}
+                          </span>
+                        )}
                       </td>
                       <td
                         className={`py-3.5 px-2 text-right ${
@@ -126,13 +130,12 @@ const Preview = ({ invoice, user, client }) => {
                             : "border-b border-gray-200"
                         }`}
                       >
-                        {
-                          item.quantity > 0 && item.unit_price > 0 && (
-                            <span>
-                              {invoice.currency} {(item.quantity * item.unit_price).toFixed(2)}
-                            </span>
-                          )
-                        }
+                        {item.quantity > 0 && item.unit_price > 0 && (
+                          <span>
+                            {invoice.currency}{" "}
+                            {(item.quantity * item.unit_price).toFixed(2)}
+                          </span>
+                        )}
                       </td>
                     </tr>
                   ))}

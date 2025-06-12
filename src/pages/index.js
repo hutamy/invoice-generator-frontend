@@ -152,7 +152,7 @@ export default function InvoiceGenerator() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-    <InvoiceHero />
+      <InvoiceHero />
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
