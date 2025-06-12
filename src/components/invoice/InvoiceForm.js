@@ -165,10 +165,10 @@ const Form = ({
               }
               options={[
                 { value: "$", label: "USD ($)" },
+                { value: "Rp", label: "IDR (Rp)" },
                 { value: "€", label: "EUR (€)" },
                 { value: "£", label: "GBP (£)" },
                 { value: "¥", label: "JPY (¥)" },
-                { value: "Rp", label: "IDR (Rp)" },
               ]}
             />
           </div>

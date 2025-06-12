@@ -62,14 +62,11 @@ export default function InvoiceGenerator() {
         field === "quantity" || field === "unit_price" ? Number(value) : value,
     };
 
-    // Recalculate item total
-    if (field === "quantity" || field === "unit_price") {
-      updatedItems[index].total =
-        updatedItems[index].quantity * updatedItems[index].unit_price;
-    }
-
     // Recalculate invoice totals
-    const subtotal = updatedItems.reduce((sum, item) => sum + item.total, 0);
+    const subtotal = updatedItems.reduce(
+      (sum, item) => sum + item.quantity * item.unit_price,
+      0
+    );
     const tax = subtotal * (invoiceData.invoice.tax_rate / 100);
     const total = subtotal + tax;
 
@@ -109,7 +106,6 @@ export default function InvoiceGenerator() {
       description: "",
       quantity: 0,
       unit_price: 0,
-      total: 0,
     };
 
     setInvoiceData((prevData) => ({
@@ -128,7 +124,10 @@ export default function InvoiceGenerator() {
     );
 
     // Recalculate totals
-    const subtotal = updatedItems.reduce((sum, item) => sum + item.total, 0);
+    const subtotal = updatedItems.reduce(
+      (sum, item) => sum + item.quantity * item.unit_price,
+      0
+    );
     const tax = subtotal * (invoiceData.invoice.tax_rate / 100);
     const total = subtotal + tax;
 
@@ -139,7 +138,7 @@ export default function InvoiceGenerator() {
         items: updatedItems,
         subtotal: subtotal,
         tax: tax,
-        ttotal: total,
+        total: total,
       },
     }));
   };

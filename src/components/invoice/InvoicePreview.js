@@ -165,7 +165,8 @@ const Preview = ({ invoice, user, client }) => {
             </div>
 
             <div className="mt-10 pt-5 border-t border-gray-200 text-sm text-gray-600">
-              <strong>Terms:</strong> {invoice.notes}
+              <strong>Terms:</strong>
+              {invoice.notes}
               <br />
               <strong>Thank you</strong> for your business!
             </div>
