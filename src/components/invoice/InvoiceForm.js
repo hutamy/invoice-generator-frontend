@@ -241,9 +241,9 @@ const Form = ({
                     <input
                       type="text"
                       className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700"
-                      value={`${
+                      value={item.quantity > 0 && item.unit_price > 0 ? `${
                         invoiceData.invoice.currency
-                      } ${item.total.toFixed(2)}`}
+                      } ${(item.quantity * item.unit_price)}` : ""}
                       disabled
                     />
                   </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InvoicePreview from "../components/invoice/InvoicePreview";
 import InvoiceForm from "../components/invoice/InvoiceForm";
+import InvoiceHero from "../components/invoice/InvoiceHero";
 import Button from "../components/ui/Button";
 
 export default function InvoiceGenerator() {
@@ -16,13 +17,12 @@ export default function InvoiceGenerator() {
           description: "",
           quantity: 0,
           unit_price: 0,
-          total: 0,
         },
       ],
-      subtotal: 3200,
+      subtotal: 0,
       tax_rate: 0,
-      tax: 320,
-      total: 3520,
+      tax: 0,
+      total: 0,
       notes: "",
     },
     user: {
@@ -147,18 +147,17 @@ export default function InvoiceGenerator() {
   // Save invoice (placeholder function)
   const saveInvoice = () => {
     console.log("Saving invoice:", invoiceData);
-    // You would add actual save functionality here
     alert("Invoice saved successfully!");
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="px-4 py-6">
-        {/* Header */}
+    <InvoiceHero />
+      <div className="p-6">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-gray-800">
-              Create New Invoice
+            <h1 className="text-xl font-medium text-gray-500">
+              Create invoices in seconds with our intuitive generator.
             </h1>
           </div>
 

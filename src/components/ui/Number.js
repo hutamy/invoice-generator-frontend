@@ -9,7 +9,7 @@ const Number = ({ className, label, value, onChange, placeholder }) => {
       <Input
         type="number"
         placeholder={placeholder}
-        value={value}
+        value={value > 0 && value}
         onChange={onChange}
       />
     </div>
