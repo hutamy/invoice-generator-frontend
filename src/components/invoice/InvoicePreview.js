@@ -1,6 +1,6 @@
 import React from "react";
 
-const Preview = ({ invoice, user, client, ref }) => {
+const Preview = ({ invoice, user, client }) => {
   return (
     <div className="w-full md:w-1/2 overflow-hidden">
       <div
@@ -8,10 +8,7 @@ const Preview = ({ invoice, user, client, ref }) => {
         style={{ height: "100%", overflow: "auto" }}
       >
         <div className="font-sans text-gray-700 bg-gray-50 py-10 px-5">
-          <div
-            ref={ref}
-            className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-10"
-          >
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-10">
             <div className="flex justify-between items-start mb-10 flex-col md:flex-row">
               <div>
                 <div className="text-3xl font-semibold text-gray-800 mb-1">
