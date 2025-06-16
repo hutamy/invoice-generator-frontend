@@ -349,8 +349,28 @@ export default function InvoiceGenerator() {
               }</div>
             </div>
             <div class="invoice-dates">
-              <div>Date: ${invoiceData.invoice.issue_date}</div>
-              <div>Due Date: ${invoiceData.invoice.due_date}</div>
+              <div>Date: ${
+                invoiceData.invoice.issue_date &&
+                new Date(invoiceData.invoice.issue_date).toLocaleDateString(
+                  "en-GB",
+                  {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  }
+                )
+              }</div>
+              <div>Due Date: ${
+                invoiceData.invoice.due_date &&
+                new Date(invoiceData.invoice.due_date).toLocaleDateString(
+                  "en-GB",
+                  {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  }
+                )
+              }</div>
             </div>
           </div>
 
