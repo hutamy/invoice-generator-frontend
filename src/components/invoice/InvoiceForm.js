@@ -16,7 +16,7 @@ const Form = ({
   handleTaxRateChange,
 }) => {
   return (
-    <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-sm">
+    <div className="w-full md:w-1/2 bg-gray-50 p-6 rounded-lg shadow-sm">
       <div className="mb-4">
         <p className="text-gray-700 font-medium mb-2">
           Fill in invoice details
@@ -25,10 +25,11 @@ const Form = ({
 
       {/* My Details Section */}
       <InvoiceFormContainer label="My Details">
-        <div className="p-4">
+        <div className="p-4 bg-white">
           <Text
-            className={"mb-3"}
+            componentclassname={"mb-3"}
             label={"Name"}
+            name="user_name"
             value={invoiceData.user.name}
             onChange={(e) => handleInputChange("user", "name", e.target.value)}
             placeholder="Your Name"
@@ -45,7 +46,7 @@ const Form = ({
           />
           <div className="grid grid-cols-2 gap-3">
             <Email
-              className=""
+              name="user_email"
               label="Email"
               value={invoiceData.user.email}
               onChange={(e) =>
@@ -54,8 +55,8 @@ const Form = ({
               placeholder="contact@yourcompany.com"
             />
             <Text
-              className=""
               label="Phone"
+              name="user_phone"
               value={invoiceData.user.phone}
               onChange={(e) =>
                 handleInputChange("user", "phone", e.target.value)
@@ -88,7 +89,7 @@ const Form = ({
             <Input
               type="text"
               placeholder="1234567890"
-              className="mt-3"
+              inputclassname="mt-3"
               value={invoiceData.user.bank_account_number}
               onChange={(e) =>
                 handleInputChange("user", "bank_account_number", e.target.value)
@@ -100,10 +101,11 @@ const Form = ({
 
       {/* Client Details Section */}
       <InvoiceFormContainer label="Client Details">
-        <div className="p-4">
+        <div className="p-4 bg-white">
           <Text
-            className={"mb-3"}
+            componentclassname={"mb-3"}
             label={"Name"}
+            name="client_name"
             value={invoiceData.client.name}
             onChange={(e) =>
               handleInputChange("client", "name", e.target.value)
@@ -122,7 +124,7 @@ const Form = ({
           />
           <div className="grid grid-cols-2 gap-3">
             <Email
-              className=""
+              name="client_email"
               label="Email"
               value={invoiceData.client.email}
               onChange={(e) =>
@@ -131,8 +133,8 @@ const Form = ({
               placeholder="contact@clientcompany.com"
             />
             <Text
-              className=""
               label="Phone"
+              name="client_phone"
               value={invoiceData.client.phone}
               onChange={(e) =>
                 handleInputChange("client", "phone", e.target.value)
@@ -145,11 +147,11 @@ const Form = ({
 
       {/* Invoice Details Section */}
       <InvoiceFormContainer label="Invoice Details">
-        <div className="p-4">
+        <div className="p-4 bg-white">
           <div className="grid grid-cols-2 gap-3 mb-3">
             <Text
-              className=""
               label={"Invoice Number"}
+              name="invoice_number"
               value={invoiceData.invoice.invoice_number}
               onChange={(e) =>
                 handleInputChange("invoice", "invoice_number", e.target.value)
@@ -174,7 +176,7 @@ const Form = ({
           </div>
           <div className="grid grid-cols-2 gap-3 mb-3">
             <Date
-              className=""
+              name="issue_date"
               label="Issue Date"
               value={invoiceData.invoice.issue_date}
               onChange={(e) => {
@@ -182,8 +184,8 @@ const Form = ({
               }}
             />
             <Date
-              className=""
               label="Due Date"
+              name="due_date"
               value={invoiceData.invoice.due_date}
               onChange={(e) =>
                 handleInputChange("invoice", "due_date", e.target.value)
@@ -209,8 +211,9 @@ const Form = ({
                   </button>
                 </div>
                 <Text
-                  className="mb-2"
+                  componentclassname="mb-2"
                   label={"Description"}
+                  name={`item_description_${index}`}
                   value={item.description}
                   onChange={(e) =>
                     handleItemChange(index, "description", e.target.value)
@@ -219,7 +222,8 @@ const Form = ({
                 />
                 <div className="grid grid-cols-3 gap-2">
                   <Number
-                    className="mb-2"
+                    componentclassname="mb-2"
+                    name={`item_quantity_${index}`}
                     label={"Quantity"}
                     value={item.quantity}
                     onChange={(e) =>
@@ -228,7 +232,8 @@ const Form = ({
                     placeholder="1"
                   />
                   <Number
-                    className="mb-2"
+                    componentclassname="mb-2"
+                    name={`item_unit_price_${index}`}
                     label={"Unit Price"}
                     value={item.unit_price}
                     onChange={(e) =>
@@ -266,7 +271,7 @@ const Form = ({
 
           <div className="grid grid-cols-2 gap-3 mb-3">
             <Number
-              className=""
+              name="tax_rate"
               label={"Tax Rate (%)"}
               value={invoiceData.invoice.tax_rate}
               onChange={(e) => handleTaxRateChange(e.target.value)}

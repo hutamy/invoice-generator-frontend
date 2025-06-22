@@ -1,17 +1,21 @@
 import Input from "./Input";
 
-const Text = ({ className, label, value, onChange, placeholder }) => {
+const Text = (props) => {
   return (
-    <div className={className}>
+    <div className={props.componentclassname}>
       <label className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
+        {props.label}
       </label>
       <Input
+        name={props.name}
         type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
+        value={props.value}
+        onChange={props.onChange}
+        {...props}
       />
+      {props.error && (
+        <p className="text-xs text-red-500 pt-1">{props.errormessage}</p>
+      )}
     </div>
   );
 };
@@ -19,9 +23,11 @@ const Text = ({ className, label, value, onChange, placeholder }) => {
 export default Text;
 
 Text.defaultProps = {
-  className: '',
-  label: '',
-  value: '',
+  componentclassname: "",
+  label: "",
+  value: "",
   onChange: () => {},
-  placeholder: "",
+  error: false,
+  name: "",
+  errormessage: "",
 };

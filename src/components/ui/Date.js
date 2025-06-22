@@ -1,17 +1,21 @@
 import Input from "./Input";
 
-const Date = ({ className, label, value, onChange, placeholder }) => {
+const Date = (props) => {
   return (
-    <div className={className}>
+    <div className={props.componentclassname}>
       <label className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
+        {props.label}
       </label>
       <Input
+        name={props.name}
         type="date"
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
+        value={props.value}
+        onChange={props.onChange}
+        {...props}
       />
+      {props.error && (
+        <p className="text-xs text-red-500 pt-1">{props.errormessage}</p>
+      )}
     </div>
   );
 };
@@ -19,9 +23,11 @@ const Date = ({ className, label, value, onChange, placeholder }) => {
 export default Date;
 
 Date.defaultProps = {
-  className: "",
+  componentclassname: "",
   label: "",
   value: "",
   onChange: () => {},
-  placeholder: "",
+  error: false,
+  name: "",
+  errormessage: "",
 };
