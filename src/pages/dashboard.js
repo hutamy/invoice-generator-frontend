@@ -2,28 +2,20 @@
 
 import { Fragment, useState } from "react";
 import {
-  Dialog,
-  DialogPanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from "@headlessui/react";
-import {
   ArrowDownCircleIcon,
   ArrowPathIcon,
   ArrowUpCircleIcon,
   Bars3Icon,
-  EllipsisHorizontalIcon,
   PlusSmallIcon,
 } from "@heroicons/react/20/solid";
-import { BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import DashboardClients from "../components/dashboard/DashboardClients";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 const navigation = [
   { name: "Home", href: "/dashboard" },
   { name: "Invoices", href: "/invoices" },
   { name: "Clients", href: "/clients" },
-  { name: "Expenses", href: "/expenses" },
 ];
 const secondaryNavigation = [
   { name: "Last 7 days", href: "#", current: true },
@@ -48,12 +40,6 @@ const stats = [
     value: "$245,988.00",
     change: "-1.39%",
     changeType: "positive",
-  },
-  {
-    name: "Expenses",
-    value: "$30,156.00",
-    change: "+10.18%",
-    changeType: "negative",
   },
 ];
 const statuses = {
@@ -118,42 +104,6 @@ const days = [
     ],
   },
 ];
-const clients = [
-  {
-    id: 1,
-    name: "Tuple",
-    imageUrl: "https://tailwindcss.com/plus-assets/img/logos/48x48/tuple.svg",
-    lastInvoice: {
-      date: "December 13, 2022",
-      dateTime: "2022-12-13",
-      amount: "$2,000.00",
-      status: "Overdue",
-    },
-  },
-  {
-    id: 2,
-    name: "SavvyCal",
-    imageUrl:
-      "https://tailwindcss.com/plus-assets/img/logos/48x48/savvycal.svg",
-    lastInvoice: {
-      date: "January 22, 2023",
-      dateTime: "2023-01-22",
-      amount: "$14,000.00",
-      status: "Paid",
-    },
-  },
-  {
-    id: 3,
-    name: "Reform",
-    imageUrl: "https://tailwindcss.com/plus-assets/img/logos/48x48/reform.svg",
-    lastInvoice: {
-      date: "January 23, 2023",
-      dateTime: "2023-01-23",
-      amount: "$7,600.00",
-      status: "Paid",
-    },
-  },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -161,88 +111,13 @@ function classNames(...classes) {
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   return (
     <>
-      <header className="absolute inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-1 items-center gap-x-6">
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              className="-m-3 p-3 md:hidden"
-            >
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon aria-hidden="true" className="size-5 text-gray-900" />
-            </button>
-          </div>
-          <nav className="hidden md:flex md:gap-x-11 md:text-sm/6 md:font-semibold md:text-gray-700">
-            {navigation.map((item, itemIdx) => (
-              <a key={itemIdx} href={item.href}>
-                {item.name}
-              </a>
-            ))}
-          </nav>
-          <div className="flex flex-1 items-center justify-end gap-x-8">
-            <button
-              type="button"
-              className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="size-6" />
-            </button>
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your profile</span>
-              <img
-                alt=""
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                className="size-8 rounded-full bg-gray-800"
-              />
-            </a>
-          </div>
-        </div>
-        <Dialog
-          open={mobileMenuOpen}
-          onClose={setMobileMenuOpen}
-          className="lg:hidden"
-        >
-          <div className="fixed inset-0 z-50" />
-          <DialogPanel className="fixed inset-y-0 left-0 z-50 w-full overflow-y-auto bg-white px-4 pb-6 sm:max-w-sm sm:px-6 sm:ring-1 sm:ring-gray-900/10">
-            <div className="-ml-0.5 flex h-16 items-center gap-x-6">
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(false)}
-                className="-m-2.5 p-2.5 text-gray-700"
-              >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon aria-hidden="true" className="size-6" />
-              </button>
-              <div className="-ml-0.5">
-                <a href="#" className="-m-1.5 block p-1.5">
-                  <span className="sr-only">Your Company</span>
-                  <img
-                    alt=""
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                    className="h-8 w-auto"
-                  />
-                </a>
-              </div>
-            </div>
-            <div className="mt-2 space-y-2">
-              {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-          </DialogPanel>
-        </Dialog>
-      </header>
-
+      <div className="bg-white h-20 border-b border-gray-900/10 px-6 lg:px-8 flex-shrink-0">
+        <Header />
+      </div>
       <main>
         <div className="relative isolate overflow-hidden pt-16">
           {/* Secondary navigation */}
@@ -276,7 +151,7 @@ export default function Example() {
 
           {/* Stats */}
           <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
-            <dl className="mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:px-2 xl:px-0">
+            <dl className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-3 lg:px-2 xl:px-0">
               {stats.map((stat, statIdx) => (
                 <div
                   key={stat.name}
@@ -319,7 +194,7 @@ export default function Example() {
                 clipPath:
                   "polygon(100% 38.5%, 82.6% 100%, 60.2% 37.7%, 52.4% 32.1%, 47.5% 41.8%, 45.2% 65.6%, 27.5% 23.4%, 0.1% 35.3%, 17.9% 0%, 27.7% 23.4%, 76.2% 2.5%, 74.2% 56%, 100% 38.5%)",
               }}
-              className="aspect-[1154/678] w-[72.125rem] bg-gradient-to-br from-[#9999ff] to-[#a7defc]"
+              className="aspect-[1154/678] w-[72.125rem] bg-gradient-to-br from-[#6e42fc] to-[#fcee08]"
             />
           </div>
         </div>
@@ -433,103 +308,12 @@ export default function Example() {
           </div>
 
           {/* Recent client list*/}
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-              <div className="flex items-center justify-between">
-                <h2 className="text-base/7 font-semibold text-gray-900">
-                  Recent clients
-                </h2>
-                <a
-                  href="#"
-                  className="text-sm/6 font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  View all<span className="sr-only">, clients</span>
-                </a>
-              </div>
-              <ul
-                role="list"
-                className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8"
-              >
-                {clients.map((client) => (
-                  <li
-                    key={client.id}
-                    className="overflow-hidden rounded-xl border border-gray-200"
-                  >
-                    <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-                      <img
-                        alt={client.name}
-                        src={client.imageUrl}
-                        className="size-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"
-                      />
-                      <div className="text-sm/6 font-medium text-gray-900">
-                        {client.name}
-                      </div>
-                      <Menu as="div" className="relative ml-auto">
-                        <MenuButton className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
-                          <span className="sr-only">Open options</span>
-                          <EllipsisHorizontalIcon
-                            aria-hidden="true"
-                            className="size-5"
-                          />
-                        </MenuButton>
-                        <MenuItems
-                          transition
-                          className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                        >
-                          <MenuItem>
-                            <a
-                              href="#"
-                              className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
-                            >
-                              View
-                              <span className="sr-only">, {client.name}</span>
-                            </a>
-                          </MenuItem>
-                          <MenuItem>
-                            <a
-                              href="#"
-                              className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
-                            >
-                              Edit
-                              <span className="sr-only">, {client.name}</span>
-                            </a>
-                          </MenuItem>
-                        </MenuItems>
-                      </Menu>
-                    </div>
-                    <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm/6">
-                      <div className="flex justify-between gap-x-4 py-3">
-                        <dt className="text-gray-500">Last invoice</dt>
-                        <dd className="text-gray-700">
-                          <time dateTime={client.lastInvoice.dateTime}>
-                            {client.lastInvoice.date}
-                          </time>
-                        </dd>
-                      </div>
-                      <div className="flex justify-between gap-x-4 py-3">
-                        <dt className="text-gray-500">Amount</dt>
-                        <dd className="flex items-start gap-x-2">
-                          <div className="font-medium text-gray-900">
-                            {client.lastInvoice.amount}
-                          </div>
-                          <div
-                            className={classNames(
-                              statuses[client.lastInvoice.status],
-                              "rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset"
-                            )}
-                          >
-                            {client.lastInvoice.status}
-                          </div>
-                        </dd>
-                      </div>
-                    </dl>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <DashboardClients />
         </div>
       </main>
+      <div className="bg-white h-fit">
+        <Footer />
+      </div>
     </>
   );
 }

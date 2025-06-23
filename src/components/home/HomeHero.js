@@ -1,4 +1,8 @@
+import { useAuth } from "@/contexts/AuthContext";
+
 export default function HomeHero() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="relative pt-14" id="home">
       <div
@@ -24,26 +28,49 @@ export default function HomeHero() {
               professional invoices with ease, helping you manage your billing
               quickly and efficiently.
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="/sign-up"
-                className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-              >
-                Sign Up Now
-              </a>
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  const el = document.querySelector("#invoice");
-                  if (el) {
-                    el.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-                className="text-sm/6 font-semibold text-gray-900"
-              >
-                Try for free <span aria-hidden="true">→</span>
-              </a>
-            </div>
+            {!isAuthenticated ? (
+              <div className="mt-10 flex items-center justify-center gap-x-6">
+                <a
+                  href="/dashboard"
+                  className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                >
+                  Go to Dashboard
+                </a>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.querySelector("#invoice");
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+                >
+                  Try generate invoice <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            ) : (
+              <div className="mt-10 flex items-center justify-center gap-x-6">
+                <a
+                  href="/sign-up"
+                  className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                >
+                  Sign Up Now
+                </a>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.querySelector("#invoice");
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+                >
+                  Try for free <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            )}
           </div>
           <div className="mt-16 flow-root sm:mt-24">
             <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">

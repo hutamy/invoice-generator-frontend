@@ -48,7 +48,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="">
+    <div>
       <div className="bg-white h-20 border-b border-gray-900/10 px-6 lg:px-8 flex-shrink-0">
         <Header />
       </div>
