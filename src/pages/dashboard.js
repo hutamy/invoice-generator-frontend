@@ -5,18 +5,23 @@ import {
   ArrowDownCircleIcon,
   ArrowPathIcon,
   ArrowUpCircleIcon,
-  Bars3Icon,
-  PlusSmallIcon,
+  PlusIcon,
 } from "@heroicons/react/20/solid";
-import DashboardClients from "../components/dashboard/DashboardClients";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ClientList from "@/components/clients/ClientList";
 
-const navigation = [
-  { name: "Home", href: "/dashboard" },
-  { name: "Invoices", href: "/invoices" },
-  { name: "Clients", href: "/clients" },
+const clients = [
+  {
+    id: 1,
+    name: "Tuple",
+    email: "example@mail.com",
+    phone: "+1234567890",
+    address: "123 Main St, City, Country",
+    imageUrl: "https://tailwindcss.com/plus-assets/img/logos/48x48/tuple.svg",
+  },
 ];
+
 const secondaryNavigation = [
   { name: "Last 7 days", href: "#", current: true },
   { name: "Last 30 days", href: "#", current: false },
@@ -110,8 +115,13 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [client, setClient] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
 
   return (
     <>
@@ -119,7 +129,7 @@ export default function Example() {
         <Header />
       </div>
       <main>
-        <div className="relative isolate overflow-hidden pt-16">
+        <div className="relative isolate overflow-hidden pt-2">
           {/* Secondary navigation */}
           <header className="pb-4 pt-6 sm:pb-6">
             <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
@@ -143,7 +153,7 @@ export default function Example() {
                 href="#"
                 className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                <PlusSmallIcon aria-hidden="true" className="-ml-1.5 size-5" />
+                <PlusIcon aria-hidden="true" className="-ml-1.5 h-4 w-4" />
                 New invoice
               </a>
             </div>
@@ -308,7 +318,26 @@ export default function Example() {
           </div>
 
           {/* Recent client list*/}
-          <DashboardClients />
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+              <div className="flex items-center justify-between">
+                <h2 className="text-base/7 font-semibold text-gray-900">
+                  Recent clients
+                </h2>
+                <a
+                  href="#"
+                  className="text-sm/6 font-semibold text-indigo-600 hover:text-indigo-500"
+                >
+                  View all<span className="sr-only">, clients</span>
+                </a>
+              </div>
+              <ClientList
+                clients={clients}
+                setClient={setClient}
+                setShowForm={setShowForm}
+              />
+            </div>
+          </div>
         </div>
       </main>
       <div className="bg-white h-fit">

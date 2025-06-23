@@ -1,5 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
 const publicNavigation = [
   { name: "Home", href: "/", id: "#home" },
@@ -70,17 +71,24 @@ export default function Header() {
               <div className="relative">
                 <button
                   type="button"
-                  className="-m-1.5 p-1.5"
+                  className="-m-1.5 p-1.5 cursor-pointer group"
                   onClick={() => setProfileOpen((open) => !open)}
                   aria-haspopup="true"
                   aria-expanded={profileOpen ? "true" : "false"}
                 >
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    className="size-8 rounded-full bg-gray-800 cursor-pointer"
-                  />
+                  <span className="flex items-center text-sm/6 font-semibold text-gray-700 group-hover:text-blue-600">
+                    <img
+                      alt=""
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      className="size-8 rounded-full bg-gray-800 group-hover:ring-1 group-hover:ring-blue-600 transition-all duration-200"
+                    />
+                    <span className="ml-2">{user?.name || "User"}</span>
+                    {profileOpen ? (
+                      <ChevronUpIcon className="h-5 w-5  ml-2" />
+                    ) : (
+                      <ChevronDownIcon className="h-5 w-5 ml-2" />
+                    )}
+                  </span>
                 </button>
                 {profileOpen && (
                   <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-xl bg-white py-1 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
