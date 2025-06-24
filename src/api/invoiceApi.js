@@ -1,15 +1,13 @@
 const API_URL = process.env.API_URL || "http://localhost:8080";
 
 export async function createInvoice(data) {
-  const token =
-    data.token ||
-    (typeof window !== "undefined" && window.localStorage.getItem("token"));
+  const token = AuthService.getAccessToken();
   const headers = { "Content-Type": "application/json" };
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_URL}/invoices`, {
+  const response = await fetch(`${API_URL}/v1/protected/invoices`, {
     method: "POST",
     headers,
     body: JSON.stringify(data),
@@ -19,15 +17,13 @@ export async function createInvoice(data) {
 }
 
 export async function getInvoices() {
-  const token =
-    data.token ||
-    (typeof window !== "undefined" && window.localStorage.getItem("token"));
+  const token = AuthService.getAccessToken();
   const headers = { "Content-Type": "application/json" };
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_URL}/invoices`, {
+  const response = await fetch(`${API_URL}/v1/protected/invoices`, {
     method: "GET",
     headers,
   });
@@ -36,15 +32,13 @@ export async function getInvoices() {
 }
 
 export async function updateInvoice(id, data) {
-  const token =
-    data.token ||
-    (typeof window !== "undefined" && window.localStorage.getItem("token"));
+  const token = AuthService.getAccessToken();
   const headers = { "Content-Type": "application/json" };
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_URL}/invoices/${id}`, {
+  const response = await fetch(`${API_URL}/v1/protected/invoices/${id}`, {
     method: "PUT",
     headers,
     body: JSON.stringify(data),
@@ -54,15 +48,12 @@ export async function updateInvoice(id, data) {
 }
 
 export async function deleteInvoice(id) {
-  const token =
-    data.token ||
-    (typeof window !== "undefined" && window.localStorage.getItem("token"));
+  const token = AuthService.getAccessToken();
   const headers = { "Content-Type": "application/json" };
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
-
-  const response = await fetch(`${API_URL}/invoices/${id}`, {
+  const response = await fetch(`${API_URL}/v1/protected/invoices/${id}`, {
     method: "DELETE",
     headers,
   });

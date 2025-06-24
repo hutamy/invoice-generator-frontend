@@ -54,7 +54,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signUp = async (userData) => {
-    await apiClient.post("/v1/public/auth/sign-up", userData);
+    setIsLoading(true);
+    try {
+      const response = await apiClient.post(
+        "/v1/public/auth/sign-up",
+        userData
+      );
+      AuthService.storeTokens(response.data);
+
+      // Fetch user data
+      const userDataResponse = await apiClient.get("/v1/protected/auth/me");
+      setUser(userDataResponse);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
