@@ -4,20 +4,19 @@ import { PlusIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import Form from "@/components/clients/ClientForm";
 import List from "@/components/clients/ClientList";
+import { withAuth } from "@/components/withAuth";
+import { useEffect } from "react";
+import Toast from "@/components/ui/Toast";
+import {
+  createClient,
+  getClients,
+  updateClient,
+  deleteClient,
+} from "@/api/clientApi";
 
-const clients = [
-  {
-    id: 1,
-    name: "Tuple",
-    email: "example@mail.com",
-    phone: "+1234567890",
-    address: "123 Main St, City, Country",
-    imageUrl: "https://tailwindcss.com/plus-assets/img/logos/48x48/tuple.svg",
-  },
-];
-
-export default function Clients() {
+function Clients() {
   const [showForm, setShowForm] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [client, setClient] = useState({
     name: "",
     email: "",
@@ -25,6 +24,8 @@ export default function Clients() {
     address: "",
   });
   const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const handleInputChange = (e) => {
     setClient({ ...client, [e.target.name]: e.target.value });
@@ -40,13 +41,41 @@ export default function Clients() {
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      // Submit the form data
-      console.log("Client data submitted:", client);
-      clearForm();
-      setShowForm(false);
+      try {
+        await createClient(client);
+        setClientsList((prev) => [...prev, client]);
+        clearForm();
+        setIsError(false);
+        setMessage("Client created successfully!");
+        setShowForm(false);
+      } catch (err) {
+        setIsError(true);
+        setMessage("Failed to create client. Please try again.");
+        console.error(err);
+      }
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (validate()) {
+      try {
+        await updateClient(client.id, client);
+        setClientsList((prev) =>
+          prev.map((c) => (c.id === client.id ? client : c))
+        );
+        setMessage("Client updated successfully!");
+        clearForm();
+        setIsError(false);
+        setShowForm(false);
+      } catch (err) {
+        setIsError(true);
+        setMessage("Failed to update client. Please try again.");
+        console.error(err);
+      }
     }
   };
 
@@ -60,11 +89,47 @@ export default function Clients() {
     setErrors({});
   };
 
+  const [clientsList, setClientsList] = useState(clients);
+  async function fetchClients() {
+    try {
+      const data = await getClients();
+      setClientsList(data.data);
+    } catch (err) {
+      setIsError(true);
+      setMessage("Failed to fetch clients. Please try again.");
+      console.error(err);
+    }
+  }
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteClient(id);
+      setClientsList((prev) => prev.filter((client) => client.id !== id));
+      setMessage("Client deleted successfully!");
+      setIsError(false);
+    } catch (err) {
+      setIsError(true);
+      setMessage("Failed to delete client. Please try again.");
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchClients();
+  }, []);
+
   return (
     <>
       <div className="bg-white h-20 border-b border-gray-900/10 px-6 lg:px-8 flex-shrink-0">
         <Header />
       </div>
+      {message && (
+        <Toast
+          title={isError ? "Error" : "Success"}
+          message={message}
+          isError={isError}
+        />
+      )}
       <main className="min-h-screen">
         {!showForm && (
           <div className="fixed inset-0 -z-10 pointer-events-none">
@@ -121,16 +186,18 @@ export default function Clients() {
             <Form
               client={client}
               handleInputChange={handleInputChange}
-              handleSubmit={handleSubmit}
+              handleSubmit={isEdit ? handleUpdate : handleSubmit}
               clearForm={clearForm}
               errors={errors}
               setShowForm={setShowForm}
             />
           ) : (
             <List
-              clients={clients}
+              clients={clientsList}
               setClient={setClient}
               setShowForm={setShowForm}
+              setIsEdit={setIsEdit}
+              handleDelete={handleDelete}
             />
           )}
         </div>
@@ -141,3 +208,5 @@ export default function Clients() {
     </>
   );
 }
+
+export default withAuth(Clients);

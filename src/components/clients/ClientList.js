@@ -1,8 +1,15 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
-export default function List({ clients, setShowForm, setClient }) {
+export default function List({
+  clients,
+  setShowForm,
+  setClient,
+  setIsEdit,
+  handleDelete,
+}) {
   return (
     <ul
       role="list"
@@ -46,6 +53,7 @@ export default function List({ clients, setShowForm, setClient }) {
                     onClick={() => {
                       setClient(client);
                       setShowForm(true);
+                      setIsEdit(true);
                     }}
                     className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
                   >
@@ -55,7 +63,7 @@ export default function List({ clients, setShowForm, setClient }) {
                 </MenuItem>
                 <MenuItem>
                   <a
-                    href="#"
+                    onClick={() => handleDelete(client.id)}
                     className="block px-3 py-1 text-sm/6 text-red-700 data-[focus]:bg-gray-50 data-[focus]:outline-none"
                   >
                     Delete

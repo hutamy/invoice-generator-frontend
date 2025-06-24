@@ -4,6 +4,7 @@ import { PlusIcon } from "@heroicons/react/20/solid";
 import InvoiceList from "@/components/invoice/InvoiceList";
 import { useState } from "react";
 import InvoiceGenerator from "@/components/invoice/InvoiceGenerator";
+import { withAuth } from "@/components/withAuth";
 
 const invoices = [
   {
@@ -19,7 +20,7 @@ const invoices = [
   },
 ];
 
-export default function Invoices() {
+function Invoices() {
   const [showForm, setShowForm] = useState(false);
 
   return (
@@ -95,3 +96,5 @@ export default function Invoices() {
     </>
   );
 }
+
+export default withAuth(Invoices);
