@@ -65,7 +65,7 @@ export default function Clients() {
       <div className="bg-white h-20 border-b border-gray-900/10 px-6 lg:px-8 flex-shrink-0">
         <Header />
       </div>
-      <main>
+      <main className="min-h-screen">
         {!showForm && (
           <div className="fixed inset-0 -z-10 pointer-events-none">
             <div
