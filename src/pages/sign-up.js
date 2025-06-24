@@ -80,11 +80,13 @@ export default function SignUp() {
           ...bankInfo,
         });
         router.push("/dashboard");
+        setIsLoading(false);
       } catch (err) {
         setError("Registration failed. Please try again.");
         console.error("Registration error:", err);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     }
   };
 

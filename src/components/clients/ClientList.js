@@ -21,11 +21,13 @@ export default function List({
           className="overflow-hidden rounded-xl border border-gray-200"
         >
           <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-            <img
-              alt={client.name}
-              src={client.imageUrl}
-              className="size-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"
-            />
+            <div className="size-12 flex-none rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-lg uppercase ring-1 ring-gray-900/10">
+              {client.name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")
+                .slice(0, 2)}
+            </div>
             <div className="text-sm/6 font-medium text-gray-900">
               <span>{client.name}</span>
               <div className="text-sm/6 font-medium text-gray-500">

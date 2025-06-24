@@ -89,7 +89,7 @@ function Clients() {
     setErrors({});
   };
 
-  const [clientsList, setClientsList] = useState(clients);
+  const [clientsList, setClientsList] = useState([]);
   async function fetchClients() {
     try {
       const data = await getClients();
@@ -97,7 +97,6 @@ function Clients() {
     } catch (err) {
       setIsError(true);
       setMessage("Failed to fetch clients. Please try again.");
-      console.error(err);
     }
   }
 

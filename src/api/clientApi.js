@@ -1,17 +1,17 @@
+import { AuthService } from "@/services/authService";
+
 const API_URL = process.env.API_URL || "http://localhost:8080";
 
 export async function createClient(data) {
-  const token =
-    data.token ||
-    (typeof window !== "undefined" && window.localStorage.getItem("token"));
+  const token = AuthService.getAccessToken();
   const headers = { "Content-Type": "application/json" };
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_URL}/clients`, {
+  const response = await fetch(`${API_URL}/v1/protected/clients`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers,
     body: JSON.stringify(data),
   });
   if (!response.ok) throw new Error("Registration failed");
@@ -19,29 +19,28 @@ export async function createClient(data) {
 }
 
 export async function getClients() {
-  const token =
-    data.token ||
-    (typeof window !== "undefined" && window.localStorage.getItem("token"));
+  const token = AuthService.getAccessToken();
   const headers = { "Content-Type": "application/json" };
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_URL}/clients`);
+  const response = await fetch(`${API_URL}/v1/protected/clients`, {
+    method: "GET",
+    headers,
+  });
   if (!response.ok) throw new Error("Failed to fetch clients");
   return response.json();
 }
 
 export async function updateClient(id, data) {
-  const token =
-    data.token ||
-    (typeof window !== "undefined" && window.localStorage.getItem("token"));
+  const token = AuthService.getAccessToken();
   const headers = { "Content-Type": "application/json" };
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_URL}/clients/${id}`, {
+  const response = await fetch(`${API_URL}/v1/protected/clients/${id}`, {
     method: "PUT",
     headers,
     body: JSON.stringify(data),
@@ -51,15 +50,13 @@ export async function updateClient(id, data) {
 }
 
 export async function deleteClient(id) {
-  const token =
-    data.token ||
-    (typeof window !== "undefined" && window.localStorage.getItem("token"));
+  const token = AuthService.getAccessToken();
   const headers = { "Content-Type": "application/json" };
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_URL}/clients/${id}`, {
+  const response = await fetch(`${API_URL}/v1/protected/clients/${id}`, {
     method: "DELETE",
     headers,
   });

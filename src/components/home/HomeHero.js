@@ -28,7 +28,7 @@ export default function HomeHero() {
               professional invoices with ease, helping you manage your billing
               quickly and efficiently.
             </p>
-            {!isAuthenticated ? (
+            {isAuthenticated ? (
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
                   href="/dashboard"
