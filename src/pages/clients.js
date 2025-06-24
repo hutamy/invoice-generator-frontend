@@ -181,6 +181,7 @@ function Clients() {
               )}
             </div>
           </div>
+
           {showForm ? (
             <Form
               client={client}
