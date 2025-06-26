@@ -32,6 +32,7 @@ export default function InvoiceList({
   setShowForm,
   setIsEdit,
   user,
+  disabled = false,
 }) {
   const [openActionsId, setOpenActionsId] = useState(null);
 
@@ -83,12 +84,14 @@ export default function InvoiceList({
               >
                 Due Date
               </th>
-              <th
-                scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-              >
-                Actions
-              </th>
+              {!disabled && (
+                <th
+                  scope="col"
+                  className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                >
+                  Actions
+                </th>
+              )}
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
@@ -126,118 +129,120 @@ export default function InvoiceList({
                     year: "numeric",
                   })}
                 </td>
-                <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-sm font-medium sm:pr-6 text-right">
-                  <span className="flex justify-end items-center gap-3 relative">
-                    <EllipsisVerticalIcon
-                      className="h-5 w-5 text-gray-500 cursor-pointer hover:text-gray-700"
-                      onClick={() =>
-                        setOpenActionsId(
-                          openActionsId === invoice.id ? null : invoice.id
-                        )
-                      }
-                    />
+                {!disabled && (
+                  <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-sm font-medium sm:pr-6 text-right">
+                    <span className="flex justify-end items-center gap-3 relative">
+                      <EllipsisVerticalIcon
+                        className="h-5 w-5 text-gray-500 cursor-pointer hover:text-gray-700"
+                        onClick={() =>
+                          setOpenActionsId(
+                            openActionsId === invoice.id ? null : invoice.id
+                          )
+                        }
+                      />
 
-                    {openActionsId === invoice.id && (
-                      <div className="absolute right-0 top-8 z-40 w-48 origin-top-right py-1">
-                        <div className="fixed right-15 z-40 w-48 origin-top-right rounded-xl bg-white py-1 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                          <div className="py-1">
-                            {statuses
-                              .filter(
-                                (status) => status.value !== invoice.status
-                              )
-                              .map((status) => (
-                                <button
-                                  key={status.value}
-                                  onClick={() => {
-                                    handleUpdateInvoiceStatus(
-                                      invoice.id,
-                                      status.value
-                                    );
-                                    setOpenActionsId(null);
-                                  }}
-                                  className="flex w-full items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer hover:text-semibold hover:text-gray-900"
-                                >
-                                  <PencilIcon className="h-4 w-4 mr-2" />
-                                  Mark as {status.label}
-                                </button>
-                              ))}
-                            <button
-                              onClick={() => {
-                                handleDownloadInvoice(invoice.id);
-                                setOpenActionsId(null);
-                              }}
-                              className="flex w-full items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer hover:text-semibold hover:text-gray-900"
-                            >
-                              <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
-                              Download
-                            </button>
+                      {openActionsId === invoice.id && (
+                        <div className="absolute right-0 top-8 z-40 w-48 origin-top-right py-1">
+                          <div className="fixed right-15 z-40 w-48 origin-top-right rounded-xl bg-white py-1 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                            <div className="py-1">
+                              {statuses
+                                .filter(
+                                  (status) => status.value !== invoice.status
+                                )
+                                .map((status) => (
+                                  <button
+                                    key={status.value}
+                                    onClick={() => {
+                                      handleUpdateInvoiceStatus(
+                                        invoice.id,
+                                        status.value
+                                      );
+                                      setOpenActionsId(null);
+                                    }}
+                                    className="flex w-full items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer hover:text-semibold hover:text-gray-900"
+                                  >
+                                    <PencilIcon className="h-4 w-4 mr-2" />
+                                    Mark as {status.label}
+                                  </button>
+                                ))}
+                              <button
+                                onClick={() => {
+                                  handleDownloadInvoice(invoice.id);
+                                  setOpenActionsId(null);
+                                }}
+                                className="flex w-full items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer hover:text-semibold hover:text-gray-900"
+                              >
+                                <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
+                                Download
+                              </button>
 
-                            <button
-                              onClick={() => {
-                                setShowForm(true);
-                                setIsEdit(true);
-                                setInvoiceData({
-                                  invoice: {
-                                    id: invoice.id,
-                                    invoice_number: invoice.invoice_number,
-                                    client_id: invoice.client_id,
-                                    issue_date: new Date(invoice.issue_date)
-                                      .toISOString()
-                                      .split("T")[0],
-                                    due_date: new Date(invoice.due_date)
-                                      .toISOString()
-                                      .split("T")[0],
-                                    currency: invoice.currency,
-                                    items: invoice.items || [],
-                                    subtotal: invoice.subtotal,
-                                    tax_rate: invoice.tax_rate,
-                                    tax: invoice.tax,
-                                    total: invoice.total,
-                                    notes: invoice.notes,
-                                  },
-                                  user: {
-                                    name: user.name || "",
-                                    address: user.address || "",
-                                    email: user.email || "",
-                                    phone: user.phone || "",
-                                    bank_name: user.bank_name || "",
-                                    bank_account_name:
-                                      user.bank_account_name || "",
-                                    bank_account_number:
-                                      user.bank_account_number || "",
-                                  },
-                                  client: {
-                                    search: invoice.client_name || "",
-                                    id: invoice.client_id,
-                                    name: invoice.client_name || "",
-                                    address: invoice.client_address || "",
-                                    email: invoice.client_email || "",
-                                    phone: invoice.client_phone || "",
-                                    dropdownOpen: false,
-                                  },
-                                });
-                              }}
-                              className="flex w-full items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer hover:text-semibold hover:text-gray-900"
-                            >
-                              <PencilSquareIcon className="h-5 w-5 mr-2" />
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => {
-                                handleDeleteInvoice(invoice.id);
-                                setOpenActionsId(null);
-                              }}
-                              className="flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer hover:text-semibold hover:text-red-800"
-                            >
-                              <TrashIcon className="h-5 w-5 mr-2" />
-                              Delete
-                            </button>
+                              <button
+                                onClick={() => {
+                                  setShowForm(true);
+                                  setIsEdit(true);
+                                  setInvoiceData({
+                                    invoice: {
+                                      id: invoice.id,
+                                      invoice_number: invoice.invoice_number,
+                                      client_id: invoice.client_id,
+                                      issue_date: new Date(invoice.issue_date)
+                                        .toISOString()
+                                        .split("T")[0],
+                                      due_date: new Date(invoice.due_date)
+                                        .toISOString()
+                                        .split("T")[0],
+                                      currency: invoice.currency,
+                                      items: invoice.items || [],
+                                      subtotal: invoice.subtotal,
+                                      tax_rate: invoice.tax_rate,
+                                      tax: invoice.tax,
+                                      total: invoice.total,
+                                      notes: invoice.notes,
+                                    },
+                                    user: {
+                                      name: user.name || "",
+                                      address: user.address || "",
+                                      email: user.email || "",
+                                      phone: user.phone || "",
+                                      bank_name: user.bank_name || "",
+                                      bank_account_name:
+                                        user.bank_account_name || "",
+                                      bank_account_number:
+                                        user.bank_account_number || "",
+                                    },
+                                    client: {
+                                      search: invoice.client_name || "",
+                                      id: invoice.client_id,
+                                      name: invoice.client_name || "",
+                                      address: invoice.client_address || "",
+                                      email: invoice.client_email || "",
+                                      phone: invoice.client_phone || "",
+                                      dropdownOpen: false,
+                                    },
+                                  });
+                                }}
+                                className="flex w-full items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer hover:text-semibold hover:text-gray-900"
+                              >
+                                <PencilSquareIcon className="h-5 w-5 mr-2" />
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => {
+                                  handleDeleteInvoice(invoice.id);
+                                  setOpenActionsId(null);
+                                }}
+                                className="flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer hover:text-semibold hover:text-red-800"
+                              >
+                                <TrashIcon className="h-5 w-5 mr-2" />
+                                Delete
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                  </span>
-                </td>
+                      )}
+                    </span>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

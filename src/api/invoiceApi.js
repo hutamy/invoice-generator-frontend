@@ -96,3 +96,18 @@ export async function updateInvoice(id, data) {
   if (!response.ok) throw new Error("Update failed");
   return response.json();
 }
+
+export async function invoiceSummary() {
+  const token = AuthService.getAccessToken();
+  const headers = { "Content-Type": "application/json" };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(`${API_URL}/v1/protected/invoices/summary`, {
+    method: "GET",
+    headers,
+  });
+  if (!response.ok) throw new Error("Failed to fetch invoice summary");
+  return response.json();
+}
