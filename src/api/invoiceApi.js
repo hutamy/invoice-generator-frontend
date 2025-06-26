@@ -1,3 +1,5 @@
+import { AuthService } from "@/services/authService";
+
 const API_URL = process.env.API_URL || "http://localhost:8080";
 
 export async function createInvoice(data) {
@@ -59,4 +61,19 @@ export async function deleteInvoice(id) {
   });
   if (!response.ok) throw new Error("Deletion failed");
   return response.json();
+}
+
+export async function downloadInvoice(id) {
+  const token = AuthService.getAccessToken();
+  const headers = {};
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(`${API_URL}/v1/protected/invoices/${id}/pdf`, {
+    method: "POST",
+    headers,
+  });
+  if (!response.ok) throw new Error("Download failed");
+  return response.blob();
 }

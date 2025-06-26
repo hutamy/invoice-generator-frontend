@@ -3,7 +3,7 @@ import InvoicePreview from "./InvoicePreview";
 import InvoiceForm from "./InvoiceForm";
 import Toast from "../ui/Toast";
 
-export default function InvoiceGenerator({ allowSave = false }) {
+export default function InvoiceGeneratorPublic() {
   // Initial state for the form
   const [invoiceData, setInvoiceData] = useState({
     invoice: {
@@ -497,8 +497,6 @@ export default function InvoiceGenerator({ allowSave = false }) {
     setIsError(false);
   };
 
-  const handleSave = async () => {};
-
   return (
     <div className="min-h-screen">
       {message && (
@@ -528,36 +526,15 @@ export default function InvoiceGenerator({ allowSave = false }) {
             client={invoiceData.client}
           />
         </div>
-        {allowSave ? (
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              onClick={() => {
-                clearForm();
-                setShowForm(false);
-              }}
-              className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-700"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 hover:cursor-pointer"
-            >
-              Save
-            </button>
-          </div>
-        ) : (
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              onClick={() => downloadPDF(invoiceData)}
-              className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 hover:cursor-pointer"
-            >
-              Download PDF
-            </button>
-          </div>
-        )}
+        <div className="mt-6 flex items-center justify-end gap-x-6">
+          <button
+            type="button"
+            onClick={() => downloadPDF(invoiceData)}
+            className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 hover:cursor-pointer"
+          >
+            Download PDF
+          </button>
+        </div>
       </div>
     </div>
   );

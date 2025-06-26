@@ -5,7 +5,9 @@ const TextArea = ({ className, label, rows, value, onChange, ...props }) => {
         {label}
       </label>
       <textarea
-        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder-gray-200"
+        className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder-gray-200 ${
+          props.disabled ? " bg-gray-100" : ""
+        }`}
         rows={rows}
         value={value}
         onChange={onChange}
@@ -23,4 +25,5 @@ TextArea.defaultProps = {
   rows: 2,
   value: "",
   onChange: () => {},
+  disabled: false,
 };

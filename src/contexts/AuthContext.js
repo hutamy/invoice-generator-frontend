@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
         if (token) {
           // Fetch user data
           const userData = await apiClient.get("/v1/protected/auth/me");
-          setUser(userData);
+          setUser(userData.data);
         }
       } catch (error) {
         // If fetching user fails, attempt token refresh
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
 
       // Fetch user data
       const userData = await apiClient.get("/v1/protected/auth/me");
-      setUser(userData);
+      setUser(userData.data);
     } finally {
       setIsLoading(false);
     }
@@ -63,8 +63,8 @@ export const AuthProvider = ({ children }) => {
       AuthService.storeTokens(response.data);
 
       // Fetch user data
-      const userDataResponse = await apiClient.get("/v1/protected/auth/me");
-      setUser(userDataResponse);
+      const userNew = await apiClient.get("/v1/protected/auth/me");
+      setUser(userNew);
     } finally {
       setIsLoading(false);
     }

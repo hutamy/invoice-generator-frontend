@@ -1,4 +1,4 @@
-import InvoiceGenerator from "../invoice/InvoiceGenerator";
+import InvoiceGeneratorPublic from "../invoice/InvoiceGeneratorPublic";
 
 export default function HomeInvoice() {
   return (
@@ -25,7 +25,7 @@ export default function HomeInvoice() {
       </div>
       <div className="mx-auto p-6">
         <div className="mx-auto mt-10">
-          <InvoiceGenerator />
+          <InvoiceGeneratorPublic />
         </div>
       </div>
       <div

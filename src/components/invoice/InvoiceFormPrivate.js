@@ -14,6 +14,7 @@ const Form = ({
   handleItemChange,
   addInvoiceItem,
   handleTaxRateChange,
+  clients,
 }) => {
   return (
     <div className="w-full md:w-1/2 bg-gray-50 p-6 rounded-lg shadow-sm">
@@ -33,6 +34,7 @@ const Form = ({
             value={invoiceData.user.name}
             onChange={(e) => handleInputChange("user", "name", e.target.value)}
             placeholder="Your Name"
+            disabled
           />
           <TextArea
             className={"mb-3"}
@@ -43,6 +45,7 @@ const Form = ({
               handleInputChange("user", "address", e.target.value)
             }
             placeholder="456 Your Street, Client City, Country"
+            disabled
           />
           <div className="grid grid-cols-2 gap-3">
             <Email
@@ -53,6 +56,7 @@ const Form = ({
                 handleInputChange("user", "email", e.target.value)
               }
               placeholder="contact@yourcompany.com"
+              disabled
             />
             <Text
               label="Phone"
@@ -62,6 +66,7 @@ const Form = ({
                 handleInputChange("user", "phone", e.target.value)
               }
               placeholder="+1 234 567 890"
+              disabled
             />
           </div>
           <div className="mt-3">
@@ -76,6 +81,7 @@ const Form = ({
                 onChange={(e) =>
                   handleInputChange("user", "bank_name", e.target.value)
                 }
+                disabled
               />
               <Input
                 type={"text"}
@@ -84,6 +90,7 @@ const Form = ({
                 onChange={(e) =>
                   handleInputChange("user", "bank_account_name", e.target.value)
                 }
+                disabled
               />
             </div>
             <Input
@@ -94,6 +101,7 @@ const Form = ({
               onChange={(e) =>
                 handleInputChange("user", "bank_account_number", e.target.value)
               }
+              disabled
             />
           </div>
         </div>
@@ -102,6 +110,128 @@ const Form = ({
       {/* Client Details Section */}
       <InvoiceFormContainer label="Client Details">
         <div className="p-4 bg-white">
+          <div className="mb-3">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Select From Client Contact
+            </label>
+            <div className="relative">
+              <button
+                type="button"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                aria-label="Clear selected client"
+                onClick={() => {
+                  handleInputChange("client", "name", "");
+                  handleInputChange("client", "email", "");
+                  handleInputChange("client", "address", "");
+                  handleInputChange("client", "phone", "");
+                  handleInputChange("client", "search", "");
+                  handleInputChange("client", "dropdownOpen", false);
+                  handleInputChange("invoice", "client_id", 0);
+                }}
+                tabIndex={0}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 6l8 8M6 14L14 6"
+                  />
+                </svg>
+              </button>
+              <input
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-blue-50"
+                placeholder="Search client by name or email"
+                value={invoiceData.client.search || ""}
+                onChange={(e) =>
+                  handleInputChange("client", "search", e.target.value)
+                }
+                onFocus={() =>
+                  handleInputChange("client", "dropdownOpen", true)
+                }
+                autoComplete="off"
+              />
+              {invoiceData.client.dropdownOpen && (
+                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-56 overflow-auto">
+                  {clients
+                    .filter(
+                      (c) =>
+                        !invoiceData.client.search ||
+                        c.name
+                          .toLowerCase()
+                          .includes(invoiceData.client.search.toLowerCase()) ||
+                        c.email
+                          .toLowerCase()
+                          .includes(invoiceData.client.search.toLowerCase())
+                    )
+                    .map((contact, idx) => (
+                      <button
+                        type="button"
+                        key={contact.email + idx}
+                        className="flex items-center w-full px-3 py-2 hover:bg-blue-50 focus:bg-blue-100"
+                        onClick={() => {
+                          handleInputChange("client", "name", contact.name);
+                          handleInputChange("client", "email", contact.email);
+                          handleInputChange("client", "dropdownOpen", false);
+                          handleInputChange("client", "search", contact.name);
+                          handleInputChange("invoice", "client_id", contact.id);
+                          handleInputChange(
+                            "client",
+                            "address",
+                            contact.address || ""
+                          );
+                          handleInputChange(
+                            "client",
+                            "phone",
+                            contact.phone || ""
+                          );
+                        }}
+                      >
+                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3 text-blue-700 font-bold text-lg">
+                          {contact.name
+                            ? contact.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")
+                                .slice(0, 2)
+                                .toUpperCase()
+                            : "?"}
+                        </span>
+                        <span className="flex flex-col text-left">
+                          <span className="font-medium text-gray-900">
+                            {contact.name}
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            {contact.email}
+                          </span>
+                        </span>
+                      </button>
+                    ))}
+                  {clients.filter(
+                    (c) =>
+                      !invoiceData.client.search ||
+                      c.name
+                        .toLowerCase()
+                        .includes(invoiceData.client.search.toLowerCase()) ||
+                      c.email
+                        .toLowerCase()
+                        .includes(invoiceData.client.search.toLowerCase())
+                  ).length === 0 && (
+                    <div className="px-3 py-2 text-gray-400 text-sm">
+                      No contacts found.
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
           <Text
             componentclassname={"mb-3"}
             label={"Name"}
