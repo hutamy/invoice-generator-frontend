@@ -12,6 +12,8 @@ import {
   createInvoice,
   deleteInvoice,
   downloadInvoice,
+  updateInvoiceStatus,
+  updateInvoice,
 } from "@/api/invoiceApi";
 import { getClients } from "@/api/clientApi";
 
@@ -24,6 +26,7 @@ function Invoices() {
   const [clientsList, setClientsList] = useState([]);
   const [invoiceData, setInvoiceData] = useState({
     invoice: {
+      id: 0,
       invoice_number: "",
       client_id: 0,
       issue_date: "",
@@ -60,6 +63,7 @@ function Invoices() {
       phone: "",
     },
   });
+  const [isEdit, setIsEdit] = useState(false);
 
   async function fetchInvoices() {
     try {
@@ -292,6 +296,42 @@ function Invoices() {
     }
   }
 
+  async function handleUpdateInvoiceStatus(invoiceId, status) {
+    try {
+      await updateInvoiceStatus(invoiceId, status);
+      setMessage(`Successfully updated invoice status`);
+      setIsError(false);
+      fetchInvoices(); // Refresh the invoice list after status update
+    } catch (error) {
+      setMessage("Failed to update invoice status");
+      setIsError(true);
+      console.error("Error updating invoice status:", error);
+    }
+  }
+
+  async function handleUpdateInvoice() {
+    try {
+      const invoice = {
+        ...invoiceData.invoice,
+        client_name: invoiceData.client.name,
+        client_address: invoiceData.client.address,
+        client_email: invoiceData.client.email,
+        client_phone: invoiceData.client.phone,
+        user_id: user.id,
+      };
+      await updateInvoice(invoiceData.invoice.id, invoice);
+      setMessage("Invoice updated successfully");
+      setIsError(false);
+      setIsEdit(false);
+      clearForm();
+      fetchInvoices(); // Refresh the invoice list after update
+    } catch (error) {
+      setMessage("Failed to update invoice");
+      setIsError(true);
+      console.error("Error updating invoice:", error);
+    }
+  }
+
   return (
     <>
       <div className="bg-white h-20 border-b border-gray-900/10 px-6 lg:px-8 flex-shrink-0">
@@ -369,12 +409,20 @@ function Invoices() {
                   addInvoiceItem={addInvoiceItem}
                   removeInvoiceItem={removeInvoiceItem}
                   handleSubmit={handleSubmit}
+                  isEdit={isEdit}
+                  handleUpdateInvoice={handleUpdateInvoice}
                 />
               ) : (
                 <InvoiceList
                   invoices={invoicesList}
                   handleDeleteInvoice={handleDeleteInvoice}
                   handleDownloadInvoice={handleDownloadInvoice}
+                  handleUpdateInvoiceStatus={handleUpdateInvoiceStatus}
+                  handleUpdateInvoice={handleUpdateInvoice}
+                  setInvoiceData={setInvoiceData}
+                  setShowForm={setShowForm}
+                  setIsEdit={setIsEdit}
+                  user={user}
                 />
               )}
             </div>

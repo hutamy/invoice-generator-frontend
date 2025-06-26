@@ -33,22 +33,6 @@ export async function getInvoices() {
   return response.json();
 }
 
-export async function updateInvoice(id, data) {
-  const token = AuthService.getAccessToken();
-  const headers = { "Content-Type": "application/json" };
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
-
-  const response = await fetch(`${API_URL}/v1/protected/invoices/${id}`, {
-    method: "PUT",
-    headers,
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) throw new Error("Update failed");
-  return response.json();
-}
-
 export async function deleteInvoice(id) {
   const token = AuthService.getAccessToken();
   const headers = { "Content-Type": "application/json" };
@@ -76,4 +60,39 @@ export async function downloadInvoice(id) {
   });
   if (!response.ok) throw new Error("Download failed");
   return response.blob();
+}
+
+export async function updateInvoiceStatus(id, status) {
+  const token = AuthService.getAccessToken();
+  const headers = { "Content-Type": "application/json" };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(
+    `${API_URL}/v1/protected/invoices/${id}/status`,
+    {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify({ status }),
+    }
+  );
+  if (!response.ok) throw new Error("Status update failed");
+  return response.json();
+}
+
+export async function updateInvoice(id, data) {
+  const token = AuthService.getAccessToken();
+  const headers = { "Content-Type": "application/json" };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(`${API_URL}/v1/protected/invoices/${id}`, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) throw new Error("Update failed");
+  return response.json();
 }

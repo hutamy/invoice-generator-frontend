@@ -13,6 +13,8 @@ export default function InvoiceGeneratorPrivate({
   addInvoiceItem,
   removeInvoiceItem,
   handleSubmit,
+  isEdit,
+  handleUpdateInvoice,
 }) {
   return (
     <div className="min-h-screen">
@@ -50,7 +52,7 @@ export default function InvoiceGeneratorPrivate({
           </button>
           <button
             type="button"
-            onClick={handleSubmit}
+            onClick={isEdit ? handleUpdateInvoice : handleSubmit}
             className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 hover:cursor-pointer"
           >
             Save
