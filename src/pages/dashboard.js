@@ -12,6 +12,21 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+const cards = [
+  {
+    label: "Paid Invoices",
+    key: "paid",
+  },
+  {
+    label: "Unpaid Invoices",
+    key: "unpaid",
+  },
+  {
+    label: "Past Due Invoices",
+    key: "past_due",
+  },
+];
+
 export default function Example() {
   const [clients, setClients] = useState([]);
   const [invoices, setInvoices] = useState([]);
@@ -60,9 +75,9 @@ export default function Example() {
           {/* Stats */}
           <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
             <dl className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-3 lg:px-2 xl:px-0">
-              {summary.map((stat, statIdx) => (
+              {cards.map((stat, statIdx) => (
                 <div
-                  key={stat.name}
+                  key={statIdx}
                   className={classNames(
                     statIdx % 2 === 1
                       ? "sm:border-l"
@@ -73,10 +88,10 @@ export default function Example() {
                   )}
                 >
                   <dt className="text-sm/6 font-medium text-gray-500 capitalize">
-                    {stat.status} Invoices
+                    {stat.label}
                   </dt>
                   <dd className="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900">
-                    {stat.currency} {stat.total.toLocaleString()}
+                    {summary.currency} {summary[stat.key]?.toLocaleString()}
                   </dd>
                 </div>
               ))}

@@ -166,9 +166,20 @@ const Form = ({
                 handleInputChange("invoice", "currency", e.target.value)
               }
               options={[
-                { value: "USD", label: "USD" },
-                { value: "IDR", label: "IDR" },
+                { value: "AUD", label: "AUD" },
+                { value: "CAD", label: "CAD" },
+                { value: "CHF", label: "CHF" },
+                { value: "CNY", label: "CNY" },
                 { value: "EUR", label: "EUR" },
+                { value: "GBP", label: "GBP" },
+                { value: "HKD", label: "HKD" },
+                { value: "IDR", label: "IDR" },
+                { value: "INR", label: "INR" },
+                { value: "JPY", label: "JPY" },
+                { value: "KRW", label: "KRW" },
+                { value: "NZD", label: "NZD" },
+                { value: "SGD", label: "SGD" },
+                { value: "USD", label: "USD" },
               ]}
             />
           </div>

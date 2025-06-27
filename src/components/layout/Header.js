@@ -77,11 +77,13 @@ export default function Header() {
                   aria-expanded={profileOpen ? "true" : "false"}
                 >
                   <span className="flex items-center text-sm/6 font-semibold text-gray-700 group-hover:text-blue-600">
-                    <img
-                      alt=""
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      className="size-8 rounded-full bg-gray-800 group-hover:ring-1 group-hover:ring-blue-600 transition-all duration-200"
-                    />
+                    <div className="size-12 flex-none rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-lg uppercase ring-1 ring-gray-900/10">
+                      {user?.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .slice(0, 2)}
+                    </div>
                     <span className="ml-2">{user?.name || "User"}</span>
                     {profileOpen ? (
                       <ChevronUpIcon className="h-5 w-5  ml-2" />
