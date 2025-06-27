@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
         const token = AuthService.getAccessToken();
         if (token) {
           // Fetch user data
-          const userData = await apiClient.get("/v1/protected/auth/me");
+          const userData = await apiClient.get("/v1/protected/me");
           setUser(userData.data);
         }
       } catch (error) {
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
       AuthService.storeTokens(response.data);
 
       // Fetch user data
-      const userData = await apiClient.get("/v1/protected/auth/me");
+      const userData = await apiClient.get("/v1/protected/me");
       setUser(userData.data);
     } finally {
       setIsLoading(false);
@@ -63,8 +63,21 @@ export const AuthProvider = ({ children }) => {
       AuthService.storeTokens(response.data);
 
       // Fetch user data
-      const userNew = await apiClient.get("/v1/protected/auth/me");
+      const userNew = await apiClient.get("/v1/protected/me");
       setUser(userNew);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateUser = async (userData) => {
+    setIsLoading(true);
+    try {
+      await apiClient.put("/v1/protected/me", userData);
+
+      // Fetch new user data
+      const user = await apiClient.get("/v1/protected/me");
+      setUser(user.data);
     } finally {
       setIsLoading(false);
     }
@@ -79,6 +92,7 @@ export const AuthProvider = ({ children }) => {
         signIn,
         logout,
         signUp,
+        updateUser,
       }}
     >
       {children}

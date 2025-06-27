@@ -1,9 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { classNames } from "@/lib/helper";
 
 const statuses = {
   Paid: "text-green-700 bg-green-50 ring-green-600/20",

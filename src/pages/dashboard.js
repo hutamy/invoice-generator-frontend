@@ -7,10 +7,7 @@ import ClientList from "@/components/clients/ClientList";
 import { getClients } from "@/api/clientApi";
 import { getInvoices, invoiceSummary } from "@/api/invoiceApi";
 import InvoiceList from "@/components/invoice/InvoiceList";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { classNames } from "@/lib/helper";
 
 const cards = [
   {

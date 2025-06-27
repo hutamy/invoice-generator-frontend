@@ -77,7 +77,7 @@ export default function Header() {
                   aria-expanded={profileOpen ? "true" : "false"}
                 >
                   <span className="flex items-center text-sm/6 font-semibold text-gray-700 group-hover:text-blue-600">
-                    <div className="size-12 flex-none rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-lg uppercase ring-1 ring-gray-900/10">
+                    <div className="size-10 flex-none rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-lg uppercase ring-1 ring-gray-900/10">
                       {user?.name
                         .split(" ")
                         .map((n) => n[0])
